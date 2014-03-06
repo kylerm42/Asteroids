@@ -16,7 +16,9 @@
 
   Ship.inherits(Asteroids.MovingObject);
 
-  Ship.MAX_VEL = 15;
+  Ship.MAX_VEL = 10;
+  Ship.RADIUS = 15;
+  Ship.COLOR = "yellow";
 
   Ship.prototype.power = function(impulse) {
     if (this.vel[0] > Ship.MAX_VEL) {
@@ -24,21 +26,20 @@
     } else if (this.vel[0] < -Ship.MAX_VEL) {
       this.vel[0] = -Ship.MAX_VEL;
     } else {
-      this.vel[0] += impulse[0];
+      this.vel[0] -= Math.cos(this.direction) * impulse;
     }
     if (this.vel[1] > Ship.MAX_VEL) {
       this.vel[1] = Ship.MAX_VEL;
     } else if (this.vel[1] < -Ship.MAX_VEL) {
       this.vel[1] = -Ship.MAX_VEL;
     } else {
-      this.vel[1] += impulse[1];
+      this.vel[1] += Math.sin(this.direction) * impulse;
     }
   }
 
   Ship.prototype.fireBullet = function (game) {
-    if (this.vel[0] !== 0 || this.vel[1] !== 0) {
-      return new Asteroids.Bullet(this.pos, this.vel, game);
-    }
+    var vel = [Math.cos(this.direction) * 3, -(Math.sin(this.direction) * 3)]
+    return new Asteroids.Bullet(this.pos, vel, game);
   };
 
   Ship.prototype.remove = function (dim_x, dim_y) {
@@ -47,21 +48,19 @@
   };
 
   Ship.prototype.draw = function (ctx) {
-    ctx.fillStyle = Ship.COLOR
     ctx.beginPath();
+    ctx.fillStyle = "yellow";
+    ctx.strokeStyle = "white";
 
-    ctx.moveTo(this.pos[0] + Math.cos(this.direction) * 15,
-               this.pos[1] + Math.sin(this.direction) * 15);
-    ctx.lineTo(this.pos[0] - Math.sin(this.direction) * 15,
-               this.pos[1] + Math.cos(this.direction) * 15);
-    ctx.lineTo(this.pos[0] + Math.cos(this.direction) * 15,
-               this.pos[1] - Math.sin(this.direction) * 15);
+    ctx.moveTo(this.pos[0] - Math.sin(this.direction) * Ship.RADIUS / 1.5,
+               this.pos[1] - Math.cos(this.direction) * Ship.RADIUS / 1.5);
+    ctx.lineTo(this.pos[0] + Math.sin(this.direction) * Ship.RADIUS / 1.5,
+               this.pos[1] + Math.cos(this.direction) * Ship.RADIUS / 1.5);
+    ctx.lineTo(this.pos[0] + Math.cos(this.direction) * Ship.RADIUS * 2,
+               this.pos[1] - Math.sin(this.direction) * Ship.RADIUS * 2);
 
+    ctx.closePath();
     ctx.fill();
+    ctx.stroke();
   };
-
-  Ship.RADIUS = 10;
-  Ship.COLOR = "yellow";
-
-
 })(this);

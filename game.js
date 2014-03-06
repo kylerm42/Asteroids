@@ -8,7 +8,7 @@
     this.dim_x = window.innerWidth;
     this.dim_y = window.innerHeight;
     this.asteroids = [];
-    this.addAsteroids(10);
+    this.addAsteroids(0);
     this.bullets = [];
     this.score = 0;
     this.ship = new Asteroids.Ship([this.dim_x/2, this.dim_y/2], [0, 0]);
@@ -134,26 +134,16 @@
   Game.prototype.bindKeyHandlers = function() {
     var that = this;
     if(key.isPressed('up')) {
-      if (that.ship.vel[1] > 0) {
-        that.ship.power([0,-3]);
-      } else {
-        that.ship.power([0,-1]);
-      }
+      that.ship.power(-1);
     }
     if(key.isPressed('down')) {
-      if (that.ship.vel[1] < 0) {
-        that.ship.power([0, 3]);
-      } else {
-        that.ship.power([0, 1]);
-      }
+      that.ship.power(1);
     }
     if(key.isPressed('left')) {
       that.ship.direction += 0.1
-      console.log(that.ship.direction);
     }
     if(key.isPressed('right')) {
       that.ship.direction -= 0.1
-      console.log(that.ship.direction);
     }
     if(key.isPressed('space')) {
       that.fireBullet(that);
