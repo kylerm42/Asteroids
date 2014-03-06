@@ -10,6 +10,7 @@
   }
 
   var Ship = Asteroids.Ship = function (pos, vel) {
+    this.direction = Math.PI / 2;
     Asteroids.MovingObject.call(this, pos, vel, Ship.RADIUS, Ship.COLOR);
   }
 
@@ -48,10 +49,14 @@
   Ship.prototype.draw = function (ctx) {
     ctx.fillStyle = Ship.COLOR
     ctx.beginPath();
-    ctx.moveTo(this.pos[0] + 15, this.pos[1] + 20);
-    ctx.lineTo(this.pos[0], this.pos[1] + 10)
-    ctx.lineTo(this.pos[0] - 15, this.pos[1] + 20);
-    ctx.lineTo(this.pos[0], this.pos[1] - 20);
+
+    ctx.moveTo(this.pos[0] + Math.cos(this.direction) * 15,
+               this.pos[1] + Math.sin(this.direction) * 15);
+    ctx.lineTo(this.pos[0] - Math.sin(this.direction) * 15,
+               this.pos[1] + Math.cos(this.direction) * 15);
+    ctx.lineTo(this.pos[0] + Math.cos(this.direction) * 15,
+               this.pos[1] - Math.sin(this.direction) * 15);
+
     ctx.fill();
   };
 

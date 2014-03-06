@@ -148,18 +148,12 @@
       }
     }
     if(key.isPressed('left')) {
-      if (that.ship.vel[0] > 0) {
-        that.ship.power([-3, 0]);
-      } else {
-        that.ship.power([-1, 0]);
-      }
+      that.ship.direction += 0.1
+      console.log(that.ship.direction);
     }
     if(key.isPressed('right')) {
-      if (that.ship.vel[0] < 0) {
-        that.ship.power([3, 0]);
-      } else {
-        that.ship.power([1, 0]);
-      }
+      that.ship.direction -= 0.1
+      console.log(that.ship.direction);
     }
     if(key.isPressed('space')) {
       that.fireBullet(that);

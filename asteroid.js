@@ -40,7 +40,7 @@
   };
 
   Asteroid.prototype.draw = function (ctx) {
-    ctx.fillStyle = this.color;
+    ctx.fillStyle = "rgba(255, 255, 255, 0.08)";
     ctx.strokeStyle = '#fff';
     ctx.lineWidth = 1;
     ctx.beginPath();
@@ -54,7 +54,7 @@
       false
     );
 
-    // ctx.fill();
+    ctx.fill();
     ctx.stroke();
   };
 
