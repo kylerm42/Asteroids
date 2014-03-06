@@ -7,11 +7,11 @@
     this.ctx = ctx;
     this.dim_x = window.innerWidth;
     this.dim_y = window.innerHeight;
+    this.ship = new Asteroids.Ship([this.dim_x/2, this.dim_y/2], [0, 0]);
     this.asteroids = [];
-    this.addAsteroids(0);
+    this.addAsteroids(10);
     this.bullets = [];
     this.score = 0;
-    this.ship = new Asteroids.Ship([this.dim_x/2, this.dim_y/2], [0, 0]);
   }
 
   // Game.DIM_X = 800;
@@ -20,7 +20,7 @@
 
   Game.prototype.addAsteroids = function(numAsteroids) {
     for (var i = 0; i < numAsteroids; i++) {
-      this.asteroids.push(Asteroids.Asteroid.randomAsteroid(this.dim_x, this.dim_y));
+      this.asteroids.push(Asteroids.Asteroid.randomAsteroid(this.dim_x, this.dim_y, this.ship.pos));
     }
   }
 

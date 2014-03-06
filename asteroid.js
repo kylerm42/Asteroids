@@ -20,12 +20,11 @@
 
   Asteroid.COLOR = "black";
 
-  Asteroid.randomAsteroid = function(dimX, dimY) {
-    var posx = Math.floor(Math.random() * dimX);
-    var posy = Math.floor(Math.random() * dimY);
+  Asteroid.randomAsteroid = function(dimX, dimY, shipPos) {
+    var pos = Asteroid.randomPosition(dimX, dimY, shipPos)
     var vel = Asteroid.randomVelocity();
 
-    return new Asteroid([posx, posy], vel);
+    return new Asteroid(pos, vel);
   }
 
   Asteroid.prototype.spawnChild = function() {
@@ -69,6 +68,18 @@
       vely = -vely;
     }
     return [velx, vely];
+  }
+
+  Asteroid.randomPosition = function(dimX, dimY, shipPos) {
+    var posX = shipPos[0];
+    var posY = shipPos[1];
+    while ((Math.abs(shipPos[0] - posX) < 100) &&
+          (Math.abs(shipPos[1] - posY) < 100)) {
+      posX = Math.floor(Math.random() * dimX);
+      posY = Math.floor(Math.random() * dimY);
+    }
+
+    return [posX, posY]
   }
 
 })(this);
